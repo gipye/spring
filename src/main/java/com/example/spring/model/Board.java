@@ -1,11 +1,6 @@
 package com.example.spring.model;
 
-import com.example.spring.model.RoleType;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,8 +9,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Enumerated;
 import javax.persistence.EnumType;
+import javax.persistence.Lob;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-import java.sql.Timestamp;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 @AllArgsConstructor
@@ -23,18 +26,19 @@ import org.hibernate.annotations.CreationTimestamp;
 @Data
 @Builder
 @Entity
-public class User {
+public class Board {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    @Column(nullable=false, length=30, unique=true)
-    private String username;
-    @Column(nullable=false, length=100, unique=false)
-    private String password;
-    @Column(nullable=false, length=50, unique=true)
-    private String email;
-    @Enumerated(EnumType.STRING)
-    private RoleType role;
+    @Column(nullable=false, length=100)
+    private String title;
+    @Lob
+    private String content;
+    @ColumnDefault("0")
+    private int count;
+    @ManyToOne
+    @JoinColumn(name="userId")
+    private User user;
     @CreationTimestamp
     private Timestamp createDate;
 }
