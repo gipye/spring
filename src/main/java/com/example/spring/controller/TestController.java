@@ -22,4 +22,8 @@ public class TestController {
     public String index() {
         return "index";
     }
+    @GetMapping("/signin")
+    public String login() {
+        return "login";
+    }
 }
