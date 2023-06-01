@@ -9,7 +9,7 @@ let index = {
         }
         $.ajax({
             type: "POST",
-            url: "/signin/proc",
+            url: "/auth/signin/proc",
             data: JSON.stringify(data),
             contentType: "application/json;charset=utf-8",
             dataType: "json"

@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Controller
 public class TestController {
-    @GetMapping("/signup")
+    @GetMapping("/auth/signup")
     public String signup() {
         return "signup";
     }
@@ -22,7 +22,7 @@ public class TestController {
     public String index() {
         return "index";
     }
-    @GetMapping("/signin")
+    @GetMapping("/auth/signin")
     public String login() {
         return "login";
     }

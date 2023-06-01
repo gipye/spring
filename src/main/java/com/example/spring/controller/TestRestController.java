@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.function.Supplier;
@@ -19,14 +20,19 @@ import javax.servlet.http.HttpSession;
 public class TestRestController {
     @Autowired
     UserRepository userRepository;
-    @PostMapping("/signup/proc")
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+    @PostMapping("/auth/signup/proc")
     public ResponseDto<String> save(@RequestBody User user) {
         user.setRole(RoleType.USER);
+
+        String rawPassword = user.getPassword();
+        user.setPassword(encoder.encode(rawPassword));
 
         userRepository.save(user);
         return new ResponseDto<String>(HttpStatus.OK, "Success sign up");
     }
-    @PostMapping("/signin/proc")
+    @PostMapping("/auth/signin/proc")
     public ResponseDto<String> login(@RequestBody User user, HttpSession session) {
         User principal = userRepository.findByUsername(user.getUsername());
         if(principal == null)

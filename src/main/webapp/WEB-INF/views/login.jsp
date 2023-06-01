@@ -25,10 +25,9 @@
         <div class="invalid-feedback">Check this checkbox to continue.</div>
       </label>
     </div>
+    <button id="btn-login" class="btn btn-primary">Login</button>
   </form>
-  <button id="btn-login" class="btn btn-primary">Login</button>
 
 </div>
 
-<script src="/js/login.js"></script>
 <%@ include file="./layout/footer.jsp" %>
