@@ -32,12 +32,15 @@ public class TestRestController {
         userRepository.save(user);
         return new ResponseDto<String>(HttpStatus.OK, "Success sign up");
     }
+    /*
     @PostMapping("/auth/signin/proc")
     public ResponseDto<String> login(@RequestBody User user, HttpSession session) {
         User principal = userRepository.findByUsername(user.getUsername());
         if(principal == null)
             return new ResponseDto<String>(HttpStatus.INTERNAL_SERVER_ERROR, "Wrong id");
-        else if(principal.getPassword().equals(user.getPassword())) {
+
+        String encodedPassword = user.getPassword();
+        if(user.getPassword().equals(encoder.decode(encodedPassword))) {
             session.setAttribute("principal", principal);
             return new ResponseDto<String>(HttpStatus.OK, "Success login");
         }
@@ -50,4 +53,5 @@ public class TestRestController {
             session.removeAttribute("principal");
         return "<h1> Logout complete <h1>";
     }
+    */
 }
