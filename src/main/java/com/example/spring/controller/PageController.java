@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Controller
-public class TestController {
+public class PageController {
     @GetMapping("/auth/signup")
     public String signup() {
         return "signup";
@@ -25,5 +25,9 @@ public class TestController {
     @GetMapping("/auth/signin")
     public String login() {
         return "login";
+    }
+    @GetMapping("/board/write")
+    public String savePage() {
+        return "/board/write";
     }
 }

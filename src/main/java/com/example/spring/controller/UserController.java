@@ -1,6 +1,6 @@
 package com.example.spring.controller;
 
-import com.example.spring.repository.UserRepository;
+import com.example.spring.servicer.UserServicer;
 import com.example.spring.model.RoleType;
 import com.example.spring.model.User;
 import com.example.spring.dto.ResponseDto;
@@ -17,19 +17,12 @@ import java.util.function.Supplier;
 import javax.servlet.http.HttpSession;
 
 @RestController
-public class TestRestController {
+public class UserController {
     @Autowired
-    UserRepository userRepository;
-    @Autowired
-    private BCryptPasswordEncoder encoder;
+    UserServicer userServicer;
     @PostMapping("/auth/signup/proc")
     public ResponseDto<String> save(@RequestBody User user) {
-        user.setRole(RoleType.USER);
-
-        String rawPassword = user.getPassword();
-        user.setPassword(encoder.encode(rawPassword));
-
-        userRepository.save(user);
+        userServicer.save(user);
         return new ResponseDto<String>(HttpStatus.OK, "Success sign up");
     }
     /*

@@ -6,7 +6,9 @@ import com.example.spring.model.User;
 import java.util.Collection;
 import java.util.ArrayList;
 import org.springframework.security.core.GrantedAuthority;
+import lombok.Data;
 
+@Data
 public class PrincipalDetail implements UserDetails {
     private User user;
     public PrincipalDetail(User user) {
