@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class PageController {
@@ -29,7 +30,7 @@ public class PageController {
     }
     @GetMapping("/")
     public String index(Model model, @PageableDefault(size=2, sort="createDate", direction=Sort.Direction.DESC) Pageable pageable) {
-        model.addAttribute("boards", boardServicer.boardList(pageable));
+        model.addAttribute("boards", boardServicer.list(pageable));
         return "index";
     }
     @GetMapping("/auth/signin")
@@ -39,5 +40,16 @@ public class PageController {
     @GetMapping("/board/write")
     public String savePage() {
         return "/board/write";
+    }
+    @GetMapping("/board/{id}")
+    public String boardDetail(Model model, @PathVariable int id) {
+        model.addAttribute("board", boardServicer.detail(id));
+        return "board/detail";
+    }
+    @GetMapping("/board/edit/{id}")
+    public String updatePage(Model model, @PathVariable int id) {
+        System.out.println("id: "+id);
+        model.addAttribute("board", boardServicer.detail(id));
+        return "board/edit";
     }
 }

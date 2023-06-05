@@ -19,7 +19,27 @@ public class BoardServicer {
         board.setUser(user);
         boardRepository.save(board);
     }
-    public Page<Board> boardList(Pageable pageable) {
+    @Transactional(readOnly=true)
+    public Page<Board> list(Pageable pageable) {
         return boardRepository.findAll(pageable);
+    }
+    @Transactional(readOnly=true)
+    public Board detail(int id) {
+        return boardRepository.findById(id).orElseThrow(()-> {
+            return new IllegalArgumentException("No corresponding board id.");
+        });
+    }
+    @Transactional
+    public void delete(int id) {
+        boardRepository.deleteById(id);
+    }
+    @Transactional
+    public void update(int id, Board board) {
+        Board oriBoard = boardRepository.findById(id).orElseThrow(()->{
+            return new IllegalArgumentException("No corresponding board id.");
+        });
+
+        oriBoard.setTitle(board.getTitle());
+        oriBoard.setContent(board.getContent());
     }
 }
