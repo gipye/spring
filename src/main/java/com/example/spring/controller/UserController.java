@@ -8,6 +8,7 @@ import com.example.spring.dto.ResponseDto;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,14 +17,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.function.Supplier;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 @RestController
 public class UserController {
     @Autowired
     UserServicer userServicer;
+    @Autowired
+    AuthenticationManager authenticationManager;
     @PostMapping("/auth/signup/proc")
     public ResponseDto<String> save(@RequestBody User user) {
         userServicer.save(user);
         return new ResponseDto<String>(HttpStatus.OK, "Success sign up");
+    }
+    @PutMapping("/myinfo/update")
+    public ResponseDto<String> userInfoUpdate(@RequestBody User user) {
+        String username = userServicer.userInfoUpdate(user);
+
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, user.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return new ResponseDto<String>(HttpStatus.OK, "Success edit");
     }
     /*
     @PostMapping("/auth/signin/proc")

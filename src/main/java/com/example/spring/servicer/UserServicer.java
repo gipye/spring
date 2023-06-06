@@ -23,4 +23,16 @@ public class UserServicer {
 
         userRepository.save(user);
     }
+    @Transactional
+    public String userInfoUpdate(User user) {
+        User principal = userRepository.findById(user.getId()).orElseThrow(()-> {
+            return new IllegalArgumentException("No user id");
+        });
+
+        String rawPassword = user.getPassword();
+        principal.setPassword(encoder.encode(rawPassword));
+        principal.setEmail(user.getEmail());
+
+        return principal.getUsername();
+    }
 }

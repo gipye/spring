@@ -48,8 +48,11 @@ public class PageController {
     }
     @GetMapping("/board/edit/{id}")
     public String updatePage(Model model, @PathVariable int id) {
-        System.out.println("id: "+id);
         model.addAttribute("board", boardServicer.detail(id));
         return "board/edit";
+    }
+    @GetMapping("/myinfo")
+    public String userInfo() {
+        return "myinfo";
     }
 }

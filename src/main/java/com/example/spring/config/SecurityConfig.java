@@ -9,10 +9,17 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.spring.config.auth.PrincipalDetailService;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+
 @Configuration // IoC
 public class SecurityConfig {
     @Autowired
     private PrincipalDetailService principalDetailService;
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
     @Bean
     public BCryptPasswordEncoder encodePWD() {
         return new BCryptPasswordEncoder();
