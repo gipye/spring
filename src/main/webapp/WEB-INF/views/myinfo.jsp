@@ -14,14 +14,24 @@
 
     <div class="form-group">
       <label for="password">Password:</label>
-      <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
+      <c:if test="${empty principal.user.oauth}">
+        <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
+      </c:if>
+      <c:if test="${not empty principal.user.oauth}">
+        <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required readonly>
+      </c:if>
       <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
 
     <div class="form-group">
       <label for="email">Email:</label>
-      <input type="text" value="${principal.user.email}" class="form-control" id="email" placeholder="Enter email" name="email" required>
+      <c:if test="${empty principal.user.oauth}">
+        <input type="text" value="${principal.user.email}" class="form-control" id="email" placeholder="Enter email" name="email" required>
+      </c:if>
+      <c:if test="${not empty principal.user.oauth}">
+        <input type="text" value="${principal.user.email}" class="form-control" id="email" placeholder="Enter email" name="email" required readonly>
+      </c:if>
       <div class="valid-feedback">Valid.</div>
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>

@@ -37,6 +37,8 @@ public class UserController {
     public ResponseDto<String> userInfoUpdate(@RequestBody User user) {
         String username = userServicer.userInfoUpdate(user);
 
+        if(username == null)
+            return new ResponseDto<String>(HttpStatus.BAD_REQUEST, "You are kakao user, So you can't edit your information");
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, user.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

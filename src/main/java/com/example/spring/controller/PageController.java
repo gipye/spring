@@ -158,6 +158,6 @@ public class PageController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         System.out.println("login complete");
 
-        return "redirect:/";
+        return "<meta http-equiv=\"refresh\" content=\"5;url=/\" />";
     }
 }

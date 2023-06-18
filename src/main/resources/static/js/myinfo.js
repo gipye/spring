@@ -18,10 +18,11 @@ let index = {
             dataType: "json"
         }).done(function(res) {
             alert("Complete edit");
+            alert(JSON.stringify(res));
             location.href="/";
         }).fail(function(err) {
             alert("Edit failed.");
-            alert(JSON.stringify(data));
+            alert(JSON.stringify(err));
         });
     }
 }

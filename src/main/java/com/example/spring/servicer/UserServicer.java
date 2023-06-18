@@ -33,6 +33,9 @@ public class UserServicer {
             return new IllegalArgumentException("No user id");
         });
 
+        if(principal.getOauth() != null)
+            return null;
+
         String rawPassword = user.getPassword();
         principal.setPassword(encoder.encode(rawPassword));
         principal.setEmail(user.getEmail());
@@ -41,7 +44,8 @@ public class UserServicer {
     }
     @Transactional
     public User kakaoLogin(KakaoProfile kakaoProfile) {
-        String username = encoder.encode(kakaoProfile.getId().toString());
+        String email = kakaoProfile.getKakao_account().getEmail();
+        String username = kakaoProfile.getId().toString()+"_I_am_kakao_user!!_"+email;
         User user = userRepository.findByUsername(username).orElseGet(()-> {
             return new User();
         });
@@ -49,7 +53,7 @@ public class UserServicer {
         if(user.getUsername() == null) {
             System.out.println("... auto signup ...");
 
-            user = User.builder().username(username).password(kakao_login_password).email(kakaoProfile.getKakao_account().getEmail()).build();
+            user = User.builder().username(username).password(kakao_login_password).email(email).oauth("kakao").build();
             this.save(user);
 
             System.out.println("Complete auto signup");
