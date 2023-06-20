@@ -12,12 +12,20 @@ import javax.persistence.EnumType;
 import javax.persistence.Lob;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
+import javax.persistence.OrderBy;
+import javax.persistence.CascadeType;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import com.example.spring.model.Reply;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -39,6 +47,10 @@ public class Board {
     @ManyToOne
     @JoinColumn(name="userId")
     private User user;
+    @OneToMany(mappedBy="board", fetch=FetchType.EAGER, cascade=CascadeType.REMOVE)
+    @JsonIgnoreProperties({"board"})
+    @OrderBy("createdate desc")
+    private List<Reply> replys;
     @CreationTimestamp
     private Timestamp createDate;
 }

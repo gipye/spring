@@ -2,6 +2,8 @@ package com.example.spring.model;
 
 import lombok.*;
 import javax.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import java.sql.Timestamp;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,4 +22,6 @@ public class Reply {
     @ManyToOne
     @JoinColumn(name="userId")
     private User user;
+    @CreationTimestamp
+    private Timestamp createDate;
 }
